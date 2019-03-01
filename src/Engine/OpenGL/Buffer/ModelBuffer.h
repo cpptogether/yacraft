@@ -32,10 +32,22 @@ namespace GL {
 		void setPositions(std::vector<glm::vec3>& glData);
 
 		/**
+		* @brief Adds vertex positions.
+		* @param glData Positions.
+		**/
+		void addPositions(std::vector<glm::vec3>& glData);
+
+		/**
 		* @brief Sets verteces normals.
 		* @param glData Normals.
 		**/
 		void setNormals(std::vector<glm::vec3>& glData);
+
+		/**
+		* @brief Adds verteces normals.
+		* @param glData Normals.
+		**/
+		void addNormals(std::vector<glm::vec3>& glData);
 
 		/**
 		* @brief Sets verteces texture coordinats.
@@ -44,16 +56,34 @@ namespace GL {
 		void setTexCoords(std::vector<glm::vec2>& glData);
 
 		/**
+		* @brief Adds verteces texture coordinats.
+		* @param glData Tex.Coords.
+		**/
+		void addTexCoords(std::vector<glm::vec2>& glData);
+
+		/**
 		* @brief Sets verteces tangents.
 		* @param glData Tangents.
 		**/
 		void setTangents(std::vector<glm::vec3>& glData);
 
 		/**
+		* @brief Adds verteces tangents.
+		* @param glData Tangents.
+		**/
+		void addTangents(std::vector<glm::vec3>& glData);
+
+		/**
 		* @brief Sets sequence to draw verteces.
 		* @param indices Indices.
 		**/
 		void setIndices(std::vector<unsigned int>& indices);
+
+		/**
+		* @brief Adds sequence to draw verteces.
+		* @param indices Indices.
+		**/
+		void addIndices(std::vector<unsigned int>& indices);
 
 		/**
 		* @brief Draw verteces as array.

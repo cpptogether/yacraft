@@ -11,10 +11,6 @@ Game::ChunkSegment::ChunkSegment(){
 	}
 }
 
-void Game::ChunkSegment::operator=(const Game::ChunkSegment& segment) {
-	blocks = segment.blocks;
-}
-
 const Game::Block& Game::ChunkSegment::getBlock(unsigned int X, unsigned int Y, unsigned int Z) const {
 	return blocks[X][Y][Z];
 }

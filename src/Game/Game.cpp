@@ -14,52 +14,62 @@ void Game::Init() {
 
 	Global::BlockAtlas = GL::LoadTexture("res/Textures/BlockAtlas.png");
 
-	Camera camera;
+	Engine::Camera camera;
+	camera.updateProjection();
 	camera.setSpeed(10.0f);
-
-	glm::vec2 windowSize = Window::GetSize();
-	glm::mat4 projection = glm::perspective(
-		(double)glm::radians(90.0f), (double)windowSize.x / (double)windowSize.y, 0.01, 10000.0);
 
 	Blocks::Init();
 
 	World::GeneralPlayerCamera = &camera;
-	World::Projection = projection;
 	World::Init();
+
+	auto onMove = [&](){
+		std::cout << camera.getPosition().x << " " << 
+			camera.getPosition().y << " " << camera.getPosition().z << "\n";
+		std::cout << (int)camera.getPosition().x / CHUNK_SEGMENT_SIZE << " " 
+			<< (int)camera.getPosition().y / CHUNK_SEGMENT_SIZE << " "
+			<< (int)camera.getPosition().z / CHUNK_SEGMENT_SIZE << "\n";
+		std::cout << (int)camera.getPosition().x / CHUNK_SEGMENT_SIZE << " "
+			<< (int)camera.getPosition().x % CHUNK_SEGMENT_SIZE << "\n";
+		std::cout << (int)camera.getPosition().y / CHUNK_SEGMENT_SIZE << " "
+			<< (int)camera.getPosition().y % CHUNK_SEGMENT_SIZE << "\n";
+		std::cout << (int)camera.getPosition().z / CHUNK_SEGMENT_SIZE << " "
+			<< (int)camera.getPosition().z % CHUNK_SEGMENT_SIZE << "\n";
+	};
 
 	Window::SetBinding("flyFront", { Keys::W }, [&]() {
 		camera.processKeyboard(CameraDir::FORWARD,
 			Window::GetDeltaTime());
-		std::cout << camera.getPosition().x << " " << 
-			camera.getPosition().y << " " << camera.getPosition().z << "\n";
-		std::cout << (int)camera.getPosition().x / CHUNK_SEGMENT_SIZE << " " 
-			<< (int)camera.getPosition().z / CHUNK_SEGMENT_SIZE << "\n";
+		onMove();
 	});
 
 	Window::SetBinding("flyLeft", { Keys::A }, [&]() {
 		camera.processKeyboard(CameraDir::LEFT, Window::GetDeltaTime());
-		std::cout << camera.getPosition().x << " " << 
-			camera.getPosition().y << " " << camera.getPosition().z << "\n";
-		std::cout << (int)camera.getPosition().x / CHUNK_SEGMENT_SIZE << " " 
-			<< (int)camera.getPosition().z / CHUNK_SEGMENT_SIZE << "\n";
+		onMove();
 	});
 
 	Window::SetBinding("flyBack", { Keys::S }, [&]() {
 		camera.processKeyboard(CameraDir::BACKWARD,
 			Window::GetDeltaTime());
-		std::cout << camera.getPosition().x << " " << 
-			camera.getPosition().y << " " << camera.getPosition().z << "\n";
-		std::cout << (int)camera.getPosition().x / CHUNK_SEGMENT_SIZE << " " 
-			<< (int)camera.getPosition().z / CHUNK_SEGMENT_SIZE << "\n";
+		onMove();
 	});
 
 	Window::SetBinding("flyRight", { Keys::D }, [&]() {
 		camera.processKeyboard(CameraDir::RIGHT,
 			Window::GetDeltaTime());
-		std::cout << camera.getPosition().x << " " << 
-			camera.getPosition().y << " " << camera.getPosition().z << "\n";
-		std::cout << (int)camera.getPosition().x / CHUNK_SEGMENT_SIZE << " " 
-			<< (int)camera.getPosition().z / CHUNK_SEGMENT_SIZE << "\n";
+		onMove();
+	});
+
+	Window::SetBinding("flyUp", { Keys::SPACE }, [&]() {
+		camera.processKeyboard(CameraDir::UP,
+			Window::GetDeltaTime());
+		onMove();
+	});
+
+	Window::SetBinding("flyDown", { Keys::LEFT_CONTROL }, [&]() {
+		camera.processKeyboard(CameraDir::DOWN,
+			Window::GetDeltaTime());
+		onMove();
 	});
 
 	Window::SetBinding("flyFaster", { Keys::LEFT_SHIFT }, [&](){
@@ -73,10 +83,12 @@ void Game::Init() {
 	});
 
 	Window::SetBinding("showFPS", { Keys::R }, [&](){
-		std::cout << "FPS: " << 1.0f / Window::GetDeltaTime() << "\n";
+		const glm::vec3& dir = camera.getFront();
+		std::cout << "FPS: " << 1.0f / Window::GetDeltaTime() << "\n"
+				<< "Front: " << dir.x << " " << dir.y << " " << dir.z << "\n";
 	});
 
-	/*Window::SetBinding("destroyBlocks", { Keys::MOUSE_BUTTON_LEFT }, [&](){
+	Window::SetBinding("destroyBlocks", { Keys::MOUSE_BUTTON_LEFT }, [&](){
 		glm::vec3 cameraPos = camera.getPosition();
 		for(int X = cameraPos.x - 2; X <= cameraPos.x + 2; X++){
 			for(int Y = cameraPos.y - 2; Y <= cameraPos.y + 2; Y++){
@@ -88,7 +100,7 @@ void Game::Init() {
 			}
 		}
 		World::Update();
-	});*/
+	});
 
 	GL::Framebuffer::EnableDepthTest();
 	GL::Framebuffer::DisableFaceCulling();

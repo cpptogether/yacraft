@@ -13,22 +13,11 @@ namespace Game {
 	*/
 	class ChunkSegment {
 	private:
-		std::array<
-			std::array<
-				std::array<
-					Block,
-					CHUNK_SEGMENT_SIZE
-				>,
-				CHUNK_SEGMENT_SIZE
-			>,
-			CHUNK_SEGMENT_SIZE
-		> blocks;
+		Block blocks[CHUNK_SEGMENT_SIZE][CHUNK_SEGMENT_SIZE][CHUNK_SEGMENT_SIZE];
 
 	public:
 
 		ChunkSegment();
-
-		void operator=(const ChunkSegment& segment);
 
 		/*
 		* @brief Gets block.

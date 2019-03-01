@@ -15,13 +15,12 @@ namespace Game {
 
 		extern GL::Shader WorldDrawShader;
 		extern std::map<std::pair<int, int>, Chunk*> Chunks;
-		extern glm::mat4 Projection;
 		extern int ProjectionSpaceInShader;
 		extern int ViewSpaceInShader;
 		extern int BlockAtlasInShader;
 		extern int RenderDistance;
 		extern std::thread GeneratorThread;
-		extern Camera* GeneralPlayerCamera;
+		extern Engine::Camera* GeneralPlayerCamera;
 		extern std::vector<std::thread> ModelBuildThreads;
 		extern glm::vec2 PreviousPosition;
 		extern Math::FastNoise Noise;

@@ -11,13 +11,14 @@ namespace GL {
 	class Buffer {
 
 	private:
-		unsigned int VAO;
 
 		unsigned int EBO;
 
 		std::vector<unsigned int> VBOs;
 
 		int sequenceCount = 0;
+
+		unsigned int VAO;
 
 	public:
 		/**
@@ -73,11 +74,23 @@ namespace GL {
 		}
 
 		/**
-		* @brief Sets sequence to run verteces.
+		* @brief Sets sequence(indeces) to run verteces.
 		* @param sequence Sequence.
 		* @param count Count of indices.
 		**/
 		void setSequence(void * sequence, int count);
+
+		/**
+		* @brief Adds sequence (indeces) to run verteces.
+		* @param sequence Sequence.
+		* @param count Count of indices.
+		**/
+		void addSequence(void * sequence, int count) {
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+			glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, sizeof(unsigned int) * count,
+				sequence);
+			this->sequenceCount = count;
+		}
 		
 		/**
 		* @brief Enables location.

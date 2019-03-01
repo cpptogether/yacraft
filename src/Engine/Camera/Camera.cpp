@@ -4,6 +4,8 @@
 #include <iostream>
 #include "Camera.h"
 
+using namespace Engine;
+
 void Camera::updateCameraVectors() {
 	glm::vec3 front;
 	front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
@@ -13,6 +15,7 @@ void Camera::updateCameraVectors() {
 
 	right = glm::normalize(glm::cross(this->front, worldUp));
 	up = glm::normalize(glm::cross(right, this->front));
+	frustum.updateFrustum(projection, getViewMatrix());
 }
 
 void Camera::globalAdd() {
@@ -37,8 +40,43 @@ Camera::Camera(glm::vec3 argPosition,
 	updateCameraVectors();
 };
 
-glm::mat4 Camera::getViewMatrix() const {
+const glm::mat4 Camera::getViewMatrix() const {
 	return glm::lookAt(position, position + front, up);
+}
+
+const glm::mat4& Camera::getProjection() const {
+	return projection;
+}
+
+const Frustum& Camera::getFrustum() const {
+	return frustum;
+}
+
+void Camera::setProjection(const glm::mat4& proj){
+	projection = proj;
+}
+
+void Camera::updateProjection() {
+	glm::vec2 windowSize = Window::GetSize();
+	projection = glm::perspective(
+		static_cast<double>(glm::radians(FOV)), static_cast<double>(windowSize.x / windowSize.y), 
+		static_cast<double>(projNear), static_cast<double>(projFar));
+}
+
+float Camera::getNear() {
+	return projNear;
+}
+
+void Camera::setNear(float argNear) {
+	projNear = argNear;
+}
+
+float Camera::getFar() {
+	return projFar;
+}
+
+void Camera::setFar(float argFar) {
+	projFar = argFar;
 }
 
 void Camera::processKeyboard(CameraDir direction, float deltaTime) {

@@ -52,7 +52,7 @@ void Game::Chunk::draw() {
 
 void Game::Chunk::setBlock(unsigned int X, unsigned int Y, unsigned int Z, Game::BlockTemplate* block) {
 	if ((Y / CHUNK_SEGMENT_SIZE) + 1 >= segments.size()) {
-		for (int counter = segments.size() - 1; counter <= Y / CHUNK_SEGMENT_SIZE; counter++) {
+		for (int counter = segments.size() - 1; counter <= (Y / CHUNK_SEGMENT_SIZE) + 1; counter++) {
 			segments.push_back(ChunkSegment());
 		}
 	}
