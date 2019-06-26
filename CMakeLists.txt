@@ -23,6 +23,7 @@ add_executable(
 	src/Math/General.cpp 
 	src/Math/FastNoise.cpp
 	src/Engine/Window/Window.cpp
+        src/Engine/Frustum/Frustum.cpp
 	src/Engine/Camera/Camera.cpp
 	src/Engine/OpenGL/Buffer/Buffer.cpp
 	src/Engine/OpenGL/Buffer/ModelBuffer.cpp
