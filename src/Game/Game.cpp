@@ -88,7 +88,7 @@ void Game::Init() {
 				<< "Front: " << dir.x << " " << dir.y << " " << dir.z << "\n";
 	});
 
-	Window::SetBinding("destroyBlocks", { Keys::MOUSE_BUTTON_LEFT }, [&](){
+        /*Window::SetBinding("destroyBlocks", { Keys::MOUSE_BUTTON_LEFT }, [&](){
 		glm::vec3 cameraPos = camera.getPosition();
 		for(int X = cameraPos.x - 2; X <= cameraPos.x + 2; X++){
 			for(int Y = cameraPos.y - 2; Y <= cameraPos.y + 2; Y++){
@@ -100,7 +100,7 @@ void Game::Init() {
 			}
 		}
 		World::Update();
-	});
+	});*/
 
 	GL::Framebuffer::EnableDepthTest();
 	GL::Framebuffer::DisableFaceCulling();
