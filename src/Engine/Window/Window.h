@@ -8,6 +8,7 @@
 #include <functional>
 #include <unordered_map>
 #include <Utilities/Keys.h>
+#include <string> // You are doing weird things with your life if you are here
 
 namespace Window {
 
